@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "biomesniffer",
+  "version": "${version}",
+  "name": "Biome Sniffer",
+  "description": "A small client-side mod to make the Sniffers texture change according to the biome they're in.",
+  "authors": [
+    "D4rkness_King"
+  ],
+  "contact": {
+    "website": "https://github.com/lucaargolo/biome-sniffer",
+    "repo": "https://github.com/lucaargolo/biome-sniffer"
+  },
+  "license": "MPL-2.0",
+  "icon": "assets/biomesniffer/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "io.github.lucaargolo.biomesniffer.client.BiomeSnifferClient"
+    ]
+  },
+  "mixins": [
+    "biomesniffer.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.14",
+    "fabric": "*",
+    "minecraft": ">=1.19.4-alpha.23.7.a"
+  }
+}
