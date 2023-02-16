@@ -183,3 +183,11 @@ task<TaskModrinthUpload>("modrinth") {
     addGameVersion(project["minecraft_version"])
     addLoader("fabric")
 }
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
+}
