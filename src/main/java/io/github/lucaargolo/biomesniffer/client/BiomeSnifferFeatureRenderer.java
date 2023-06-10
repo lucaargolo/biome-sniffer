@@ -49,7 +49,7 @@ public class BiomeSnifferFeatureRenderer<T extends SnifferEntity> extends Featur
         World world = livingEntity.getWorld();
         Optional<Biome> optional = world.getRegistryManager().get(RegistryKeys.BIOME).getOrEmpty(biomeIdentifier);
         Biome biome = optional.orElse(livingEntity.getWorld().getBiome(livingEntity.getBlockPos()).value());
-        int color = biome.getFoliageColor();
+        int color = BiomeSniffer.CONFIG.useGrassColor ? biome.getGrassColorAt(livingEntity.getX(), livingEntity.getZ()) : biome.getFoliageColor();
         float r = (color >> 16 & 0xFF) / 255f;
         float g = (color >> 8 & 0xFF) / 255f;
         float b = (color & 0xFF) / 255f ;
