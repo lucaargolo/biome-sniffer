@@ -1,10 +1,10 @@
 package io.github.lucaargolo.biomesniffer.mixin;
 
 import io.github.lucaargolo.biomesniffer.BiomeSniffer;
-import net.minecraft.class_8153;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.SnifferEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +22,7 @@ public abstract class AnimalEntityMixin extends PassiveEntity {
     @SuppressWarnings("ConstantValue")
     @Inject(at = @At("TAIL"), method = "writeCustomDataToNbt")
     public void writeCustomTrackedDataToNbt(NbtCompound nbt, CallbackInfo ci) {
-        if((Object) (this) instanceof class_8153) {
+        if((Object) (this) instanceof SnifferEntity) {
             nbt.putString("biomesniffer:biome_string", this.dataTracker.get(BiomeSniffer.BIOME_STRING));
         }
     }
@@ -30,7 +30,7 @@ public abstract class AnimalEntityMixin extends PassiveEntity {
     @SuppressWarnings("ConstantValue")
     @Inject(at = @At("TAIL"), method = "readCustomDataFromNbt")
     public void readCustomTrackedDataToNbt(NbtCompound nbt, CallbackInfo ci) {
-        if((Object) (this) instanceof class_8153) {
+        if((Object) (this) instanceof SnifferEntity) {
             this.dataTracker.set(BiomeSniffer.BIOME_STRING, nbt.getString("biomesniffer:biome_string"));
         }
     }

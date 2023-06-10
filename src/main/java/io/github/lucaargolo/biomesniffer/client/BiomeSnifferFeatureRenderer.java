@@ -2,8 +2,6 @@ package io.github.lucaargolo.biomesniffer.client;
 
 import io.github.lucaargolo.biomesniffer.BiomeSniffer;
 import io.github.lucaargolo.biomesniffer.mixed.SnifferEntityMixed;
-import net.minecraft.class_8153;
-import net.minecraft.class_8185;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -14,7 +12,9 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.client.render.entity.model.SnifferEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.passive.SnifferEntity;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -22,12 +22,12 @@ import net.minecraft.world.biome.Biome;
 
 import java.util.Optional;
 
-public class BiomeSnifferFeatureRenderer<T extends class_8153> extends FeatureRenderer<T, class_8185<T>> {
+public class BiomeSnifferFeatureRenderer<T extends SnifferEntity> extends FeatureRenderer<T, SnifferEntityModel<T>> {
     private final EntityModel<T> model;
 
-    public BiomeSnifferFeatureRenderer(FeatureRendererContext<T, class_8185<T>> context, EntityModelLoader loader) {
+    public BiomeSnifferFeatureRenderer(FeatureRendererContext<T, SnifferEntityModel<T>> context, EntityModelLoader loader) {
         super(context);
-        this.model = new class_8185<>(loader.getModelPart(EntityModelLayers.SNIFFER));
+        this.model = new SnifferEntityModel<>(loader.getModelPart(EntityModelLayers.SNIFFER));
     }
 
     @Override

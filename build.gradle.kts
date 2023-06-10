@@ -143,10 +143,7 @@ curseforge {
         mainArtifact(file(releaseFile), closureOf<CurseArtifact> {
             displayName = releaseName
             relations(closureOf<CurseRelation> {
-                embeddedLibrary("pal")
-                optionalDependency("roughly-enough-items")
                 requiredDependency("fabric-api")
-                requiredDependency("fabric-language-kotlin")
             })
         })
 
@@ -161,27 +158,20 @@ curseforge {
     })
 }
 
-//Modrinth publishing
-task<TaskModrinthUpload>("modrinth") {
-    dependsOn(tasks.remapJar)
-    group = "upload"
 
-    onlyIf {
-        environment.containsKey("MODRINTH_TOKEN")
+modrinth {
+    tasks.remapJar
+    token.set(environment["MODRINTH_TOKEN"]) // This is the default. Remember to have the MODRINTH_TOKEN environment variable set or else this will fail, or set it to whatever you want - just make sure it stays private!
+    projectId.set(project["modrinth_id"]) // This can be the project ID or the slug. Either will work!
+    versionNumber.set(version as String) // You don't need to set this manually. Will fail if Modrinth has this version already
+    versionType.set(releaseType.toLowerCase()) // This is the default -- can also be `beta` or `alpha`
+    uploadFile.set(file(releaseFile)) // With Loom, this MUST be set to `remapJar` instead of `jar`!
+    gameVersions.add(project["minecraft_version"]) // Must be an array, even with only one version
+    loaders.add("fabric") // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
+    dependencies { // A special DSL for creating dependencies
+        required.project("fabric-api") // Creates a new required dependency on Fabric API
     }
-    token = environment["MODRINTH_TOKEN"]
-
-    projectId = project["modrinth_id"]
-    changelog = getChangeLog()
-
-    versionNumber = version as String
-    versionName = releaseName
-    versionType = VersionType.valueOf(releaseType)
-
-    uploadFile = file(releaseFile)
-
-    addGameVersion(project["minecraft_version"])
-    addLoader("fabric")
+    group = "upload"
 }
 
 publishing {
